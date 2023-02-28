@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class shapeSlot : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioClip _completeClip;
 }
