@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class shapeManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private List<shapeSlot> _slotPrefabs;
+    [SerializeField] private shape _shapePrefab;
+    [SerializeField] private Transform _slotParent, _shapeParent;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Start() {
+        Spawn();
+    }
+    void Spawn(){
+        var randomSet = _slotPrefabs.OrderBy(s=>Random.value).Take(4).ToList();
+
+        for (int i = 0; i < randomSet.Count; i++)
+        {
+            var spawnedSlot = Instantiate(randomSet[i], _slotParent.GetChild(i).position, Quaternion.identity);
+
+            var spawnedShape = Instantiate(_shapePrefab, _shapeParent.GetChild(i).position, Quaternion.identity);
+            spawnedShape.Init(spawnedSlot);
+        }
     }
 }
