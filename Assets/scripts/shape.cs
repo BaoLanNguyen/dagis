@@ -8,7 +8,7 @@ public class shape : MonoBehaviour
     [SerializeField] SpriteRenderer _renderer;
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _pickupClip, _dropClip;
-    private bool _dragging;
+    private bool _dragging, _placed;
     private Vector2 _offset;
 
     private shapeSlot _slot;
@@ -17,6 +17,7 @@ public class shape : MonoBehaviour
         _slot = slot;
     }
     void Update() {
+        if(_placed) return;
         if(!_dragging) return;       
         var mousePosition = GetMousePos();
         transform.position = mousePosition - _offset;
@@ -30,6 +31,8 @@ public class shape : MonoBehaviour
     void OnMouseUp() {
         if (Vector2.Distance(transform.position, _slot.transform.position) < 3){
             transform.position = _slot.transform.position;
+            _slot.Place();
+            _placed = true;
         }
         _dragging = false;
         _source.PlayOneShot(_dropClip);
